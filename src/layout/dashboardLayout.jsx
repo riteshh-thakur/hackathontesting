@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> 58b2cc1 (Initial commit)
 import Navbar from "@/components/navbar";
 import Dashboard from "@/views/dashboard/dashboard";
 import { Route, Routes } from "react-router-dom";
