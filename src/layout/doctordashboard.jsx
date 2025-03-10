@@ -9,7 +9,7 @@ import Schedule from '../screens/Schedule.jsx';
 import Patients from '../screens/Patient.jsx';
 import Profile from '../screens/Profile.jsx';
 import Messagebox from '../screens/Messagebox.jsx';
-import Logout from '../screens/Logout.jsx';
+import SignIn from '../views/dashboard/SignIn.jsx';
 import Message from '../screens/Message.jsx';
 
 const DoctorDashboards = () => {
@@ -24,7 +24,7 @@ const DoctorDashboards = () => {
           <Route path="profile" element={<Profile />} />
           <Route path="messagebox" element={<Messagebox />} />
           <Route path="message" element={<Message />} />
-          <Route path="logout" element={<Logout />} />
+          <Route path="SignIn" element={<SignIn />} />
         </Route>
       </Routes>
     

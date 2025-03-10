@@ -2,7 +2,7 @@
 
 
 
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/navbarr";
 import Dashboard from "@/views/dashboard/dashboard";
 import { Route, Routes } from "react-router-dom";
 import Profile from "@/views/dashboard/profile";

@@ -26,7 +26,7 @@ function SignIn() {
             ? "/dashboard"
             : userState.userName === "Doctor"
             ? "/docdashboard"
-            : "/patient-dashboard";
+            : "/main";
         navigate(route);
     };
 
@@ -70,9 +70,9 @@ function SignIn() {
                             </button>
                         </form>
                         <p>
-                            {userState.isRegistered
-                                ? "Don't have an account? "
-                                : "Already have an account? "}
+                            {/* {userState.isRegistered
+                                ? ""
+                                : "Already have an account? "} */}
                             <button
                                 className="toggle-button"
                                 onClick={() => setUserState({
