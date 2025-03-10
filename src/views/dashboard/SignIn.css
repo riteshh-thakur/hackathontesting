@@ -1,73 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 224 71.4% 4.1%;
-    --card: 0 0% 100%;
-    --card-foreground: 224 71.4% 4.1%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 224 71.4% 4.1%;
-    --primary: 220.9 39.3% 11%;
-    --primary-foreground: 210 20% 98%;
-    --secondary: 220 14.3% 95.9%;
-    --secondary-foreground: 220.9 39.3% 11%;
-    --muted: 220 14.3% 95.9%;
-    --muted-foreground: 220 8.9% 46.1%;
-    --accent: 220 14.3% 95.9%;
-    --accent-foreground: 220.9 39.3% 11%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 20% 98%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 224 71.4% 4.1%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.5rem
-  }
-  .dark {
-    --background: 224 71.4% 4.1%;
-    --foreground: 210 20% 98%;
-    --card: 224 71.4% 4.1%;
-    --card-foreground: 210 20% 98%;
-    --popover: 224 71.4% 4.1%;
-    --popover-foreground: 210 20% 98%;
-    --primary: 210 20% 98%;
-    --primary-foreground: 220.9 39.3% 11%;
-    --secondary: 215 27.9% 16.9%;
-    --secondary-foreground: 210 20% 98%;
-    --muted: 215 27.9% 16.9%;
-    --muted-foreground: 217.9 10.6% 64.9%;
-    --accent: 215 27.9% 16.9%;
-    --accent-foreground: 210 20% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 20% 98%;
-    --border: 215 27.9% 16.9%;
-    --input: 215 27.9% 16.9%;
-    --ring: 216 12.2% 83.9%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%
-  }
-}
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-} 
-
-
-
-
 * {
   margin: 0;
   padding: 0;
@@ -93,39 +23,38 @@
   min-height: 370px;
   max-width: 100%;
 }
-.inner{
+
+.inner {
   text-align: center;
   display: flex;
-
-  padding: 20px 0px;
- 
-  justify-content: center;
+  flex-direction: column; /* Stack elements vertically */
+  align-items: center; /* Center elements horizontally */
+  justify-content: center; /* Center elements vertically */
+  padding: 20px;
   background-color: #75dc71;
-  color:white;
+  color: white;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
-  position: relative;
-  overflow: hidden;
   width: 668px;
   max-width: 100%;
-  /* min-height: 370px; */
   transition: opacity 1s ease;
 }
 
-.inner button{
-  padding: 10px 45px;
-  border: 1px solid transparent;
+.inner button {
+  padding: 12px 45px;
+  border: none;
   border-radius: 8px;
   font-weight: 600;
   letter-spacing: 0.5px;
-  margin: 10px;
   cursor: pointer;
-  font-size: 20px;
-  transition: background-color 0.3s ;
- 
+  font-size: 18px;
+  transition: background-color 0.3s ease;
   background-color: #12b550;
   color: #fff;
-
+  margin: 10px auto; /* Centering with margin auto */
+  display: block; /* Ensures button is treated as a block element */
 }
+
+
 .inner button:hover{
   background-color:  #0b4e25;
 }
@@ -254,14 +183,14 @@
   width: 50%;
   height: 100%;
   overflow: hidden;
- /* border-radius: 100px; */
+ border-radius: 100px;
   z-index: 1000;
   transition: all 0.6s ease-in-out;
 }
 
 .container.active .toogle-container {
   transform: translateX(-100%);
- /* border-radius: 100px; */
+ border-radius: 100px;
 }
 
 .toogle {
@@ -311,6 +240,9 @@
 .container.active .toogle-right {
   transform: translateX(200%);
 }
+
+
+
 
 @media screen and (max-width: 428px) {
   .container {
