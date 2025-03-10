@@ -13,6 +13,8 @@ import Doco from "./components/Doco";
 import SignIn from "./views/dashboard/SignIn";
 import DoctorDashboard from "./layout/dashboardLayout";
 import DoctorDashboards from "./layout/doctordashboard";
+import Messagebox from "./components/Messagebox.jsx";
+import Message from "./components/Message.jsx";
 
 // Styles
 import "./index.css";
@@ -53,6 +55,8 @@ const App = () => {
             <Route path="/doctors" element={<Doctors />} />
             <Route path="/appointment/:id" element={<Appointment />} />
             <Route path="/messages" element={<Doco />} />
+            <Route path='/messagebox' element={<Messagebox />} />
+<Route path='/messagebox/message' element={<Message />} />
 
             {/* Redirect unknown routes to SignIn */}
             <Route path="*" element={<Navigate to="/SignIn" />} />
