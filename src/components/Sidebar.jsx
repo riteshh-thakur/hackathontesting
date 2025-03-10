@@ -21,7 +21,12 @@ const Sidebar = () => {
         
         <li>
           <NavLink to="/messages" className="sidebar-link" activeClassName="active-link">
-            <FaComments className="icon" /> Messages
+            <FaComments className="icon" /> Virtual Doctor
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/messagebox" className="sidebar-link" activeClassName="active-link">
+            <FaClipboardList className="icon" /> Messagebox
           </NavLink>
         </li>
         <li>
