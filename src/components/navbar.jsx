@@ -1,4 +1,3 @@
-
 import { Link, useNavigate } from "react-router-dom";
 import { FiBell } from "react-icons/fi";
 import { FaUser } from "react-icons/fa";
@@ -73,11 +72,7 @@ const Navbar = () => {
 
           {/* Logout */}
           <div
-<<<<<<< HEAD
-            onClick={() => navigate("/logout")}
-=======
             onClick={() => navigate("/SignIn")}
->>>>>>> 58b2cc1 (Initial commit)
             className="flex items-center gap-2 cursor-pointer hover:bg-red-300 px-4 py-2 rounded-md transition duration-300"
           >
             <FontAwesomeIcon icon={faSignOutAlt} className="text-red-600 text-base" />
