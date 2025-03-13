@@ -14,8 +14,9 @@ const navigate=useNavigate();
             {/* Role Selection Section */}
             {!userRole && (
                 <div className="inner">
-                    <h1>Welcome User! You are a?</h1>
+                  
                     <div className='add-space'>
+                    <h1  >Welcome User! You are a?</h1>
                         <button onClick={() => handleRoleSelection('doctor')}>Doctor</button>
                         <h3>OR</h3>
                         <button onClick={() => handleRoleSelection('patient')}>Patient</button>

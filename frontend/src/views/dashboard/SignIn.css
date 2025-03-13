@@ -13,6 +13,7 @@
   justify-content: center;
   flex-direction: column;
   height: 100vh;
+  
  
 }
 .add-space{
@@ -23,9 +24,14 @@
   min-height: 370px;
   max-width: 100%;
 }
+.heading{
+  display: inline;
+}
 .inner{
   text-align: center;
   display: flex;
+  
+ 
 
   padding: 20px 0px;
  
@@ -35,7 +41,7 @@
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
   position: relative;
   overflow: hidden;
-  width: 668px;
+  width: 608px;
   max-width: 100%;
   /* min-height: 370px; */
   transition: opacity 1s ease;
