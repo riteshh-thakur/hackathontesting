@@ -1,10 +1,10 @@
-const jwt = require("jsonwebtoken");
+import { sign, verify } from "jsonwebtoken";
 require("dotenv").config();
 
-const httpStatusCode = require("../constants/httpStatusCode");
+import { UNAUTHORIZED } from "../constants/httpStatusCode";
 
 async function getToken(user) {
-  const token = await jwt.sign({ user }, process.env.JWT_SECRET, {
+  const token = await sign({ user }, process.env.JWT_SECRET, {
     expiresIn: "1d",
   });
   return token;
@@ -14,13 +14,13 @@ async function verifyToken(req, res, next) {
   const token = req.headers.authorization.split(" ")[1];
   if (!token) {
     return res
-      .status(httpStatusCode.UNAUTHORIZED)
+      .status(UNAUTHORIZED)
       .json({ success: false, message: "Unauthorized: Token not provided" });
   }
 
   try {
     // Split the authorization header by space and directly use the token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = verify(token, process.env.JWT_SECRET);
     req.user = decoded.user;
     console.log(req.user);
     // console.log("token:", token);
@@ -29,12 +29,12 @@ async function verifyToken(req, res, next) {
   } catch (error) {
     console.error("Error verifying token:", error);
     return res
-      .status(httpStatusCode.UNAUTHORIZED)
+      .status(UNAUTHORIZED)
       .json({ success: false, message: "Unauthorized: Invalid token" });
   }
 }
 
-module.exports = {
+export default {
   getToken,
   verifyToken,
 };
