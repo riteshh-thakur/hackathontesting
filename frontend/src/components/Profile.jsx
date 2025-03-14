@@ -225,3 +225,273 @@ const Profile = () => {
 };
 
 export default Profile;
+
+
+
+// import React, { useState, useEffect } from "react";
+// import "./ProfileCard.css";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faCamera, faTimes } from "@fortawesome/free-solid-svg-icons";
+
+// const Profile = () => {
+//   const defaultData = {
+//     name: "",
+//     age: "",
+//     bloodGroup: "",
+//     location: "",
+//     image: null,
+//   };
+
+//   const [formData, setFormData] = useState({ ...defaultData });
+//   const [savedData, setSavedData] = useState(null);
+//   const [profile, setProfile] = useState(null);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState("");
+
+//   useEffect(() => {
+//     const fetchProfile = async () => {
+//       setLoading(true);
+//       try {
+//         const token = localStorage.getItem("token");
+//         if (!token) {
+//           setError("User not authenticated. Please log in.");
+//           setLoading(false);
+//           return;
+//         }
+
+//         const response = await fetch("http://localhost:8080/api/patient/profile", {
+//           method: "GET",
+//           headers: {
+//             Authorization: `Bearer ${token}`,
+//             "Content-Type": "application/json",
+//           },
+//         });
+
+//         if (!response.ok) {
+//           if (response.status === 401) throw new Error("Unauthorized: Invalid or expired token.");
+//           throw new Error(`Error ${response.status}: ${response.statusText}`);
+//         }
+
+//         const data = await response.json();
+//         setProfile(data);
+//       } catch (err) {
+//         setError(err.message);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchProfile();
+//   }, []);
+
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData((prev) => ({ ...prev, [name]: value }));
+//   };
+
+//   const handleSave = () => {
+//     setSavedData(formData);
+//     localStorage.setItem("savedData", JSON.stringify(formData));
+//   };
+
+//   return (
+//     <div className="profile-container">
+//       {loading ? (
+//         <p>Loading...</p>
+//       ) : error ? (
+//         <p style={{ color: "red" }}>{error}</p>
+//       ) : profile ? (
+//         <div className="card">
+//           <h2>Personal Information</h2>
+//           <p><b>Name:</b> {profile.name}</p>
+//           <p><b>Age:</b> {profile.age}</p>
+//           <p><b>Blood Group:</b> {profile.bloodGroup}</p>
+//         </div>
+//       ) : (
+//         <p>No profile data found.</p>
+//       )}
+
+//       <div className="card form-card">
+//         <h2>Edit Your Details</h2>
+//         <label>Name:</label>
+//         <input type="text" name="name" value={formData.name} onChange={handleChange} />
+//         <label>Age:</label>
+//         <input type="number" name="age" value={formData.age} onChange={handleChange} />
+//         <label>Blood Group:</label>
+//         <input type="text" name="bloodGroup" value={formData.bloodGroup} onChange={handleChange} />
+//         <button className="save" onClick={handleSave}>Save</button>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Profile;
+
+
+
+
+// // import React, { useState, useEffect } from "react";
+// // import "./ProfileCard.css";
+// // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// // import { faCamera, faTimes } from "@fortawesome/free-solid-svg-icons";
+
+// // const Profile = () => {
+// //   const defaultData = {
+// //     name: "",
+// //     age: "",
+// //     bloodGroup: "",
+// //     location: "",
+// //     image: null,
+// //   };
+
+// //   const [formData, setFormData] = useState({ ...defaultData });
+// //   const [savedData, setSavedData] = useState(null);
+
+
+// //   useEffect(() => {
+// //     const fetchProfile = async () => {
+// //       try {
+// //         const token = localStorage.getItem("token");
+// //         if (!token) {
+// //           setError("User not authenticated. Please log in.");
+// //           setLoading(false);
+// //           return;
+// //         }
+  
+// //         const response = await fetch("http://localhost:8080/api/patient/profile", {
+// //           method: "GET",
+// //           headers: {
+// //             Authorization: `Bearer ${token}`,  // ✅ Correct token format
+// //             "Content-Type": "application/json",
+// //           },
+// //         });
+  
+// //         if (!response.ok) {
+// //           if (response.status === 401) throw new Error("Unauthorized: Invalid or expired token.");
+// //           throw new Error(`Error ${response.status}: ${response.statusText}`);
+// //         }
+  
+// //         const data = await response.json();
+// //         setProfile(data);
+// //       } catch (err) {
+// //         setError(err.message);
+// //       } finally {
+// //         setLoading(false);
+// //       }
+// //     };
+  
+// //     fetchProfile();
+// //   }, []);
+
+// //   const handleChange = (e) => {
+// //     const { name, value } = e.target;
+// //     setFormData((prev) => ({ ...prev, [name]: value }));
+// //   };
+
+// //   const handleSave = () => {
+// //     setSavedData(formData);
+// //     localStorage.setItem("savedData", JSON.stringify(formData));
+// //   };
+
+// //   return (
+// //     <div className="profile-container">
+// //       <div className="card">
+// //         <h2>Personal Information</h2>
+// //         {savedData ? (
+// //           <>
+// //             <p><b>Name:</b> {savedData.name}</p>
+// //             <p><b>Age:</b> {savedData.age}</p>
+// //             <p><b>Blood Group:</b> {savedData.bloodGroup}</p>
+// //           </>
+// //         ) : (
+// //           <p>No details available. Please update your profile.</p>
+// //         )}
+// //       </div>
+
+// //       <div className="card form-card">
+// //         <h2>Edit Your Details</h2>
+// //         <label>Name:</label>
+// //         <input type="text" name="name" value={formData.name} onChange={handleChange} />
+// //         <label>Age:</label>
+// //         <input type="number" name="age" value={formData.age} onChange={handleChange} />
+// //         <label>Blood Group:</label>
+// //         <input type="text" name="bloodGroup" value={formData.bloodGroup} onChange={handleChange} />
+// //         <button className="save" onClick={handleSave}>Save</button>
+// //       </div>
+// //     </div>
+// //   );
+// // };
+
+// // export default Profile;
+
+
+
+// // import React, { useState, useEffect } from "react";
+
+// // const ProfileCard = () => {
+// //   const [profile, setProfile] = useState(null);
+// //   const [loading, setLoading] = useState(true);
+// //   const [error, setError] = useState("");
+
+// //   useEffect(() => {
+// //     const fetchProfile = async () => {
+// //       try {
+// //         const token = localStorage.getItem("token");
+// //         if (!token) {
+// //           setError("User not authenticated. Please log in.");
+// //           setLoading(false);
+// //           return;
+// //         }
+
+// //         const response = await fetch("http://localhost:8080/api/patient/profile", {
+// //           method: "GET",
+// //           headers: {
+// //             Authorization: `Bearer ${token}`,
+// //             "Content-Type": "application/json",
+// //           },
+// //         });
+
+// //         if (!response.ok) {
+// //           throw new Error(`Error ${response.status}: ${response.statusText}`);
+// //         }
+
+// //         const data = await response.json();
+// //         setProfile(data);
+// //       } catch (err) {
+// //         setError(err.message);
+// //       } finally {
+// //         setLoading(false);
+// //       }
+// //     };
+
+// //     fetchProfile();
+// //   }, []);
+
+// //   return (
+// //     <div className="flex justify-center items-center h-screen">
+// //       <div className="bg-white shadow-md rounded-lg p-6 w-80 text-center border border-gray-200">
+// //         <h2 className="text-xl font-semibold text-gray-800">Patient Profile</h2>
+
+// //         {loading ? (
+// //           <p className="text-gray-600 mt-4">Loading...</p>
+// //         ) : error ? (
+// //           <p className="text-red-500 mt-4">{error}</p>
+// //         ) : (
+// //           <>
+// //             <p className="mt-4">
+// //               <span className="font-semibold">Name:</span> {profile?.name || "N/A"}
+// //             </p>
+// //             <p>
+// //               <span className="font-semibold">Age:</span> {profile?.age || "N/A"}
+// //             </p>
+// //             <p>
+// //               <span className="font-semibold">Blood Group:</span> {profile?.bloodGroup || "N/A"}
+// //             </p>
+// //           </>
+// //         )}
+// //       </div>
+// //     </div>
+// //   );
+// // };
+
+// // export default ProfileCard;
