@@ -1,12 +1,13 @@
 import mongoose from "mongoose";
+ 
 const chatschema= new mongoose.Schema({
  
     userone:{
         type: mongoose.Schema.ObjectId,
-    ref:'doctor'},
+    ref:'user'},
     usertwo:{
         type: mongoose.Schema.ObjectId,
-        ref:'user'},
+        ref:'Doctor'},
     
 },{
     timestamps:true

@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { FaMicrophone, FaStop } from "react-icons/fa";
 import output from "../assets/output.jpg";
+import { apiClient } from "../../axios/axios.js";
 import 'regenerator-runtime/runtime';
 import "./doco.css";
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-import { apiClient } from "../../axios/axios.js";
+ 
 
 function Doco() {
     const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
@@ -35,6 +36,15 @@ function Doco() {
 
             const data = response.data;
             console.log("Response Data:", data);
+            let chatlink=""
+            {{
+                if(data.doctor.name){
+                 const chat=  await apiClient.post(`/chat/chat?doctor=${data.doctor.name}`)
+                console.log("s",chat);
+                
+                 chatlink=chat.data.chatId;
+                }
+            }}
             const scheduleMessage = data.doctor?.schedule.length
             ? data.doctor.schedule
             : "please provide more info";
@@ -42,7 +52,8 @@ function Doco() {
         setMessages((prev) => [
             ...prev,
             { text: data.message, sender: "bot" },
-            { text: scheduleMessage, sender: "bot" }
+            { text: scheduleMessage, sender: "bot" },
+            {text: `now you can chat with doctor from messagebox now`}
         ]);
             
         } catch (error) {

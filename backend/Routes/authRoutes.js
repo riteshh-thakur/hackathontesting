@@ -28,8 +28,8 @@ router.post("/signup", async (req, res) => {
 // Signin Route
 router.post("/signin", async (req, res) => {
   try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const { name, password } = req.body;
+    const user = await User.findOne({ name });
 
     if (!user) return res.status(400).json({ message: "User not found" });
 
@@ -37,6 +37,7 @@ router.post("/signin", async (req, res) => {
     if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
     const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
+console.log(token);
 
     res.json({ message: "Sign in successful", token });
   } catch (err) {

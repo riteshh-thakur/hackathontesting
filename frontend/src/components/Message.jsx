@@ -1,25 +1,50 @@
-import React from 'react';
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from "react-router-dom";
 import { MdSend } from "react-icons/md";
+import { initializeSocket, recievemessage, sendmessage } from '../config/socket.js';
 
 function Message() {
   const location = useLocation();
   const navigate = useNavigate();
   const [doctorName, setDoctorName] = useState(location.state?.name || "Dr. John Doe");
+  const [chatId, setChatId] = useState(location.state?.id || "");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
+    console.log("Chat ID:", chatId);
+
     if (doctorName) {
-      setMessages([
-        { sender: "Doctor", name: doctorName, text: "Your blood pressure seems stable.", time: "12:01 PM" },
-        { sender: "Doctor", name: doctorName, text: "Please avoid direct sunlight for faster recovery.", time: "12:02 PM" },
-        { sender: "Patient", name: "Patient", text: "Thank you! Is there anything else I should know?", time: "12:03 PM" },
-      ]);
+      setMessages([]);
     }
   }, [doctorName]);
+
+  useEffect(() => {
+    if (!chatId) return; // Prevent initializing socket with an undefined chatId
+
+    const socket = initializeSocket(chatId);
+    
+    // Use `recievemessage` for better message handling
+    recievemessage("project-message", (data) => {
+      setMessages((prevMessages) => [...prevMessages, data.message]);
+    });
+
+    return () => socket.disconnect();
+  }, [chatId]);
+
+  const handleSendMessage = () => {
+    if (message.trim() !== "") {
+      const newMessage = {
+        sender: "Patient",
+        name: "Patient",
+        text: message,
+        time: new Date().toLocaleTimeString(),
+      };
+      setMessages([...messages, newMessage]);
+      sendmessage("project-message", newMessage); // Corrected the sendmessage function
+      setMessage("");
+    }
+  };
 
   return (
     <div className="flex justify-end">
@@ -56,12 +81,7 @@ function Message() {
               onChange={(e) => setMessage(e.target.value)}
             />
             <button
-              onClick={() => {
-                if (message.trim() !== "") {
-                  setMessages([...messages, { sender: "Patient", name: "Patient", text: message, time: "12:04 PM" }]);
-                  setMessage("");
-                }
-              }}
+              onClick={handleSendMessage}
               className="bg-green-500 text-white px-4 py-2 rounded-md"
             >
               <MdSend />

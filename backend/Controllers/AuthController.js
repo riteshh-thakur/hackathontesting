@@ -1,14 +1,15 @@
 import { hash, compare } from 'bcrypt';
-import jwt from 'jsonwebtoken'; // Corrected import for jsonwebtoken
+import jwt from 'jsonwebtoken'; 
 import UserModel from "../Models/user.js";
 import dotenv from 'dotenv';
 
-dotenv.config(); // Ensure environment variables are loaded
+dotenv.config(); 
 
 export const signup = async (req, res) => {
     try {
         const { name, email, password } = req.body;
         const user = await UserModel.findOne({ email });
+
         if (user) {
             return res.status(409).json({
                 message: 'User already exists, you can login',
@@ -35,21 +36,28 @@ export const signup = async (req, res) => {
 
 export const login = async (req, res) => {
     try {
-        const { email, password } = req.body;
-        const user = await UserModel.findOne({ email });
-        const errorMsg = 'Auth failed: email or password is wrong';
+        const { name, password } = req.body;
+        console.log(name);
+        
+        const user = await UserModel.findOne({ name:name });
 
         if (!user) {
-            return res.status(403).json({ message: errorMsg, success: false });
+            return res.status(403).json({ 
+                message: 'Auth failed: Name or password is wrong', 
+                success: false 
+            });
         }
 
         const isPassEqual = await compare(password, user.password);
         if (!isPassEqual) {
-            return res.status(403).json({ message: errorMsg, success: false });
+            return res.status(403).json({ 
+                message: 'Auth failed: Name or password is wrong', 
+                success: false 
+            });
         }
 
         const jwtToken = jwt.sign(
-            { email: user.email, _id: user._id },
+            { name: user.name, _id: user._id },
             process.env.JWT_SECRET,
             { expiresIn: '24h' }
         );
@@ -58,10 +66,12 @@ export const login = async (req, res) => {
             message: "Login successful",
             success: true,
             jwtToken,
-            email,
+            email: user.email,  // Fixed missing 'email' reference
             name: user.name
         });
     } catch (err) {
+        console.log("xfcgh");
+        
         console.error("Login Error:", err);
         res.status(500).json({
             message: "Internal server error",
@@ -69,5 +79,3 @@ export const login = async (req, res) => {
         });
     }
 };
-
- 

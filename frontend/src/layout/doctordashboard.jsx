@@ -23,7 +23,7 @@ const DoctorDashboards = () => {
           <Route path="patients" element={<Patients />} />
           <Route path="profile" element={<Profile />} />
           <Route path="messagebox" element={<Messagebox />} />
-          <Route path="message" element={<Message />} />
+          <Route path="message/:id" element={<Message />} />
           <Route path="SignIn" element={<SignIn />} />
         </Route>
       </Routes>

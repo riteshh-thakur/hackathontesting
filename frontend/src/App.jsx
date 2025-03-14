@@ -56,7 +56,7 @@ const App = () => {
             <Route path="/appointment/:id" element={<Appointment />} />
             <Route path="/messages" element={<Doco />} />
             <Route path='/messagebox' element={<Messagebox />} />
-<Route path='/messagebox/message' element={<Message />} />
+<Route path='/messagebox/message/:messageId' element={<Message />} />
 
             {/* Redirect unknown routes to SignIn */}
             <Route path="*" element={<Navigate to="/SignIn" />} />

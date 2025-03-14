@@ -77,13 +77,16 @@ export const login = async (req, res) => {
           return res.status(400).json({ error: "Doctor not registered" });   
       }
 
-      const jwtToken = jwt.sign(
+      const token = jwt.sign(
           { name: doctor.name, _id: doctor._id },
           process.env.JWT_SECRET,
           { expiresIn: '24h' }
       );
+        
 
-      res.status(200).json({ message: "Doctor login successful", doctorname, jwtToken });
+      res.status(200).json({ message: "Login successful",
+        success: true,
+        token,doctor });
   } catch (error) {
       console.error("Login Error:", error);  // Logs the error for debugging
       res.status(500).json({ error: "Error in doclogin", details: error.message });  // Correct JSON format
