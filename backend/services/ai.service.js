@@ -44,7 +44,8 @@ export const generateResult = async (prompt) => {
         2. Verify if the doctor is available today (check the 'available' field).
         3. If a doctor matches the specialty and is available, provide their details.
         4. If no doctor is available or matches the specialty, inform the user.
-        5. generate response in hindi language in devnagri lipi if prompt is in hindi
+        5. generate response in hindi language in devnagri lipi if prompt is in hindi  
+        
         Response format:
         {
             "doctor": {
@@ -86,7 +87,7 @@ export const generateResult = async (prompt) => {
         const parsedResponse = JSON.parse(responseText);
 
         if (parsedResponse.doctor && !parsedResponse.doctor.available) {
-            return JSON.stringify({ message: "No doctors are available at this time." });
+            return JSON.stringify({ message: "No doctors are available at this time regarding your disease.please provide more info about your disease so i can help you finding a doctor" });
         }
 
         return responseText;
