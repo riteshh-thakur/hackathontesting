@@ -44,7 +44,7 @@ export const generateResult = async (prompt) => {
         2. Verify if the doctor is available today (check the 'available' field).
         3. If a doctor matches the specialty and is available, provide their details.
         4. If no doctor is available or matches the specialty, inform the user.
-        
+        5. generate response in hindi if prompt is in hindi text
         Response format:
         {
             "doctor": {
