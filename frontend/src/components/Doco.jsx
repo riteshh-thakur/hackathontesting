@@ -38,21 +38,19 @@ function Doco() {
             console.log("Response Data:", data);
             let chatlink=""
             {{
-                if(data.doctor.name){
+                if(data.doctor?.name){
                  const chat=  await apiClient.post(`/chat/chat?doctor=${data.doctor.name}`)
                 console.log("s",chat);
                 
                  chatlink=chat.data.chatId;
                 }
             }}
-            const scheduleMessage = data.doctor?.schedule.length
-            ? data.doctor.schedule
-            : "please provide more info";
+           
 
         setMessages((prev) => [
             ...prev,
             { text: data.message, sender: "bot" },
-            { text: scheduleMessage, sender: "bot" },
+            
             {text: `now you can chat with doctor from messagebox now`}
         ]);
             

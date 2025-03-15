@@ -11,7 +11,8 @@ import connectDB from "./Models/db.js";
 import airouter from './Routes/ai.routes.js';
 import chatrouter from "./Routes/chat.routes.js";
 import chat from "./Models/Chat.model.js";
-import { log } from "console";
+import messagerouter from "./Routes/message.routes.js";
+ 
 import jwt from "jsonwebtoken";
 dotenv.config();
 
@@ -88,7 +89,7 @@ app.use("/api", doctorRoutes);
 app.use("/api/auth", authRoutes);
 app.use('/chat', chatrouter);
 app.use('/ai', airouter);
-
+app.use('/message',messagerouter);
 const router = express.Router();
 
 router.get("/profile", authMiddleware, async (req, res) => {

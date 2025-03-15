@@ -1,21 +1,31 @@
 import mongoose from "mongoose";
-const messageschema= new mongoose.Schema({
-message:{
-    type:String,
- },
- sender:{
-    type:String
- },
- reciever:{
-    type:String
- },
 
-    chat:{
-        type: mongoose.Schema.ObjectId,
-    ref:'chat'}
-    
-},{
-    timestamps:true
-})
-const message=mongoose.model('message',messageschema);
-export default message
+const messageSchema = new mongoose.Schema({
+    message: {
+        type: String,
+        required: true,         // Ensures message content is mandatory
+        trim: true              // Removes unnecessary spaces
+    },
+    sender: {
+        type: String, // Reference to User model
+        ref: 'User',
+        required: true
+    },
+    reciever: {
+        type: String, // Reference to User model
+        ref: 'User',
+        required: true
+    },
+    chat: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Chat',
+        required: true
+    }
+}, {
+    timestamps: true            // Automatically manages createdAt and updatedAt
+});
+
+// Ensure consistent model naming
+const Message = mongoose.model('Message', messageSchema);
+
+export default Message;
