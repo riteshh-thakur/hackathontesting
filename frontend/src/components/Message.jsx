@@ -65,9 +65,7 @@ function Message() {
 
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-bold">{doctorName}</h2>
-          <button className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center">
-            Video Call
-          </button>
+          
         </div>
 
         <div>
@@ -91,7 +89,7 @@ function Message() {
 
         <div className="mt-4 text-right">
           <button className="bg-green-100 text-green-700 px-4 py-2 rounded-md">
-            Request Prescription
+            Add Attachment
           </button>
           <button className="ml-5 bg-green-100 text-green-700 px-4 py-2 rounded-md">
             Request Test

@@ -11,6 +11,7 @@ import Profile from '../screens/Profile.jsx';
 import Messagebox from '../screens/Messagebox.jsx';
 import SignIn from '../views/dashboard/SignIn.jsx';
 import Message from '../screens/Message.jsx';
+import Room from "../screens/Room.jsx";
 
 const DoctorDashboards = () => {
   return (
@@ -25,6 +26,7 @@ const DoctorDashboards = () => {
           <Route path="messagebox" element={<Messagebox />} />
           <Route path="message/:id" element={<Message />} />
           <Route path="SignIn" element={<SignIn />} />
+          <Route path="room/:roomId" element={<Room />} />
         </Route>
       </Routes>
     
