@@ -18,10 +18,10 @@ function Message() {
   }, [patientName]);
 
   useEffect(() => {
-    if (!chatId.trim()) return; // Prevent socket initialization if chatId is empty
+    if (!chatId.trim()) return;
 
     const socket = initializeSocket(chatId);
-    
+
     recievemessage("project-message", (data) => {
       setMessages((prevMessages) => [...prevMessages, data]);
     });
@@ -32,13 +32,13 @@ function Message() {
   const handleSendMessage = () => {
     if (message.trim() !== "") {
       const newMessage = {
-        sender: "Doctor", // Adjust this if sender roles need to change dynamically
+        sender: "Doctor",
         name: "Doctor",
         text: message,
         time: new Date().toLocaleTimeString(),
       };
       setMessages([...messages, newMessage]);
-      sendmessage("project-message", { chatId, message: newMessage }); // Corrected sendmessage
+      sendmessage("project-message", { chatId, message: newMessage });
       setMessage("");
     }
   };
@@ -57,7 +57,18 @@ function Message() {
           {messages.map((msg, index) => (
             <div key={index} className="mb-3">
               <p className="font-semibold">{msg.name}</p>
-              <p className="text-gray-700">{msg.text}</p>
+              <p className="text-gray-700">
+                {msg.text.includes('http://localhost:5173/docdashboard/room/') ? (
+                  <a 
+                    href={msg.text} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-blue-500 underline"
+                  >
+                    {msg.text}
+                  </a>
+                ) : msg.text}
+              </p>
               <p className="text-sm text-gray-500">{msg.time}</p>
             </div>
           ))}
@@ -65,17 +76,12 @@ function Message() {
 
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-bold">{patientName}</h2>
-          {/* <button className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center">
+          <button 
+            className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center"
+            onClick={() => window.open(`/docdashboard/room/${chatId}`, "_blank")}
+          >
             Video Call
-          </button> */}
-
-<button 
-  className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center"
-  onClick={() => window.open(`/docdashboard/room/${chatId}`, "_blank")}
->
-  Video Call
-</button>
-
+          </button>
         </div>
 
         <div>
