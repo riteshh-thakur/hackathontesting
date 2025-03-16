@@ -18,7 +18,7 @@ dotenv.config();
 
 const app = express();
 const server = createServer(app); // Create HTTP server instance
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 5001;
 
 // Middleware
 app.use(express.json());
