@@ -20,11 +20,10 @@ function Message() {
   }, [doctorName]);
 
   useEffect(() => {
-    if (!chatId) return; // Prevent initializing socket with an undefined chatId
+    if (!chatId) return;
 
     const socket = initializeSocket(chatId);
     
-    // Use `recievemessage` for better message handling
     recievemessage("project-message", (data) => {
       setMessages((prevMessages) => [...prevMessages, data.message]);
     });
@@ -41,9 +40,14 @@ function Message() {
         time: new Date().toLocaleTimeString(),
       };
       setMessages([...messages, newMessage]);
-      sendmessage("project-message", newMessage); // Corrected the sendmessage function
+      sendmessage("project-message", newMessage);
       setMessage("");
     }
+  };
+
+  const renderMessageText = (text) => {
+    const urlPattern = /(http:\/\/localhost:5173\/docdashboard\/room\/\w+)/g;
+    return text.replace(urlPattern, (url) => `<a href="${url}" target="_blank" class="text-blue-500 underline">${url}</a>`);
   };
 
   return (
@@ -57,7 +61,7 @@ function Message() {
           {messages.map((msg, index) => (
             <div key={index} className="mb-3">
               <p className="font-semibold">{msg.name}</p>
-              <p className="text-gray-700">{msg.text}</p>
+              <p className="text-gray-700" dangerouslySetInnerHTML={{ __html: renderMessageText(msg.text) }}></p>
               <p className="text-sm text-gray-500">{msg.time}</p>
             </div>
           ))}
@@ -65,9 +69,6 @@ function Message() {
 
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-bold">{doctorName}</h2>
-          <button className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center">
-            Video Call
-          </button>
         </div>
 
         <div>
@@ -91,7 +92,7 @@ function Message() {
 
         <div className="mt-4 text-right">
           <button className="bg-green-100 text-green-700 px-4 py-2 rounded-md">
-            Request Prescription
+            Add Attachment
           </button>
           <button className="ml-5 bg-green-100 text-green-700 px-4 py-2 rounded-md">
             Request Test

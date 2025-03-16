@@ -16,6 +16,7 @@ import DoctorDashboards from "./layout/doctordashboard";
 import Messagebox from "./components/Messagebox.jsx";
 import Message from "./components/Message.jsx";
 
+
 // Styles
 import "./index.css";
 import "./components/styles.css";
@@ -44,10 +45,14 @@ const App = () => {
         {!noNavbarSidebar && <Sidebar />}
         <div className="page-content">
           <Routes>
+
+          
+
             {/* Pages without Navbar & Sidebar */}
             <Route path="/SignIn" element={<SignIn />} />
             <Route path="/dashboard/*" element={<DoctorDashboard />} />
             <Route path="/docdashboard/*" element={<DoctorDashboards />} />
+            
 
             {/* Pages with Navbar & Sidebar */}
             <Route path="/main" element={<MainPage />} />
