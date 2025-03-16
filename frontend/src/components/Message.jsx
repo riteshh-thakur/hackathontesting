@@ -93,6 +93,7 @@ function Message() {
         <div className="mt-4 text-right">
           <button className="bg-green-100 text-green-700 px-4 py-2 rounded-md">
             Add Attachment
+            Add Attachment
           </button>
           <button className="ml-5 bg-green-100 text-green-700 px-4 py-2 rounded-md">
             Request Test
