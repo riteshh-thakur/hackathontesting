@@ -267,12 +267,13 @@ img {
 
 .logo {
   display: flex;
-  align-items: center;
+  align-items:center;
   gap: 10px;
 }
 
 .topi-logo {
-  height: 40px;
+  height: 145px;
+  margin-top: 25px;
 }
 
 .brand-name {
@@ -385,3 +386,68 @@ img {
   outline: none;
   font-size: 16px;
 }  
+.toll-free-banner {
+  background-color: rgb(28, 144, 28);
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+
+  position: fixed;
+  top: 60px; /* Below navbar */
+  left: 250px;
+  z-index: 999;
+  border-bottom: 3px solid rgb(28, 144, 28);
+  right:36px;
+}
+
+/* Flashing Effect for Toll-Free */
+.flash {
+  color: yellow;
+  text-decoration: none;
+  animation: flash 1s infinite;
+}
+
+@keyframes flash {
+  0% { color: yellow; }
+  50% { color: white; }
+  100% { color: yellow; }
+}
+.translate-btn {
+  margin-left: 10px;
+  padding: 5px 12px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.translate-btn:hover {
+  background-color: #45a049;
+}
+.goog-te-banner-frame {
+  display: none !important;
+}
+
+body {
+  top: 0 !important;
+}
+.translate-btn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  margin-left: 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.translate-btn:hover {
+  background-color: #45a049;
+}

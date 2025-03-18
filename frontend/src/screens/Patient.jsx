@@ -1,21 +1,12 @@
-import React, { useState } from "react";
-
-const patients = [
-  { name: "John Doe", id: "P12345", lastVisit: "2023-09-15" },
-  { name: "Jane Smith", id: "P12346", lastVisit: "2023-09-12" },
-  { name: "Alice Brown", id: "P12347", lastVisit: "2023-09-10" },
-  { name: "Bob Johnson", id: "P12348", lastVisit: "2023-09-08" },
-  { name: "Carol White", id: "P12349", lastVisit: "2023-09-05" },
-  { name: "David Lee", id: "P12350", lastVisit: "2023-09-01" },
-  { name: "Emily Clark", id: "P12351", lastVisit: "2023-08-30" },
-  { name: "Frank Harris", id: "P12352", lastVisit: "2023-08-25" },
-  { name: "Grace King", id: "P12353", lastVisit: "2023-08-20" },
-  { name: "Henry Scott", id: "P12354", lastVisit: "2023-08-18" },
-];
+import React, { useState, useEffect } from "react";
+import { apiClient } from "../../axios/axios.js";
 
 function Patient() {
+  const [patients, setPatients] = useState([]);
   const [addPatients, setAddPatients] = useState(false);
   const [patientDetail, setPatientDetail] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const [user, setUser] = useState({
     name: "",
     age: 1,
@@ -23,6 +14,21 @@ function Patient() {
     conditions: "Hypertension, Allergies",
     details: ["", "", "", "", ""],
   });
+
+  useEffect(() => {
+    const fetchPatients = async () => {
+      try {
+        const response = await apiClient.get("/chat/docchats");
+        setPatients(response.data.chats.map(chat => chat.userone));
+        setLoading(false);
+      } catch (err) {
+        setError("Failed to fetch patient data.");
+        setLoading(false);
+      }
+    };
+
+    fetchPatients();
+  }, []);
 
   const handleChange = (e) => {
     setUser((prevUser) => ({ ...prevUser, [e.target.name]: e.target.value }));
@@ -36,6 +42,9 @@ function Patient() {
     });
   };
 
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
+
   return (
     <>
       {!addPatients && !patientDetail && (
@@ -43,7 +52,7 @@ function Patient() {
           <div className="flex justify-between items-center mb-6">
             <button
               onClick={() => setAddPatients(true)}
-              className="flex justify-end bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+              className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
             >
               + Add Patient
             </button>
@@ -52,7 +61,7 @@ function Patient() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {patients.map((patient) => (
               <PatientCard
-                key={patient.id}
+                key={patient._id}
                 patient={patient}
                 setPatientDetail={setPatientDetail}
                 setUser={setUser}
@@ -65,7 +74,10 @@ function Patient() {
       {addPatients && (
         <div>
           Add Patients
-          <button className="bg-gray-400 rounded-lg" onClick={() => setAddPatients(false)}>
+          <button
+            className="bg-gray-400 rounded-lg"
+            onClick={() => setAddPatients(false)}
+          >
             Back
           </button>
         </div>
@@ -86,39 +98,6 @@ function Patient() {
               />
             </div>
 
-            <div className="mb-4">
-              <label className="block text-gray-700">Patient's Age</label>
-              <input
-                type="number"
-                name="age"
-                min="1"
-                value={user.age}
-                onChange={handleChange}
-                className="w-full border p-2 rounded mt-1"
-              />
-            </div>
-
-            <div className="mb-4">
-              <label className="block text-gray-700">Blood Group</label>
-              <input
-                type="text"
-                name="bloodGroup"
-                value={user.bloodGroup}
-                onChange={handleChange}
-                className="w-full border p-2 rounded mt-1"
-              />
-            </div>
-
-            <div className="mb-4">
-              <label className="block text-gray-700">Chronic Conditions</label>
-              <textarea
-                name="conditions"
-                value={user.conditions}
-                onChange={handleChange}
-                className="w-full border p-2 rounded mt-1"
-              ></textarea>
-            </div>
-
             {user.details.map((detail, index) => (
               <div className="mb-2" key={index}>
                 <input
@@ -133,9 +112,7 @@ function Patient() {
 
             <div className="flex justify-between mt-4">
               <button
-                onClick={() => {
-                  setPatientDetail(false);
-                }}
+                onClick={() => setPatientDetail(false)}
                 className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
               >
                 Save
@@ -164,8 +141,7 @@ const PatientCard = ({ patient, setPatientDetail, setUser }) => {
   return (
     <div className="bg-white shadow-lg rounded-lg p-4 border border-gray-200">
       <h2 className="text-lg font-semibold">{patient.name}</h2>
-      <p className="text-sm text-gray-600">ID: {patient.id}</p>
-      <p className="text-sm text-gray-500">Last Visit: {patient.lastVisit}</p>
+      <p className="text-sm text-gray-600">Email: {patient.email}</p>
       <button
         onClick={() => {
           setUser((prevUser) => ({

@@ -15,7 +15,7 @@ import DoctorDashboard from "./layout/dashboardLayout";
 import DoctorDashboards from "./layout/doctordashboard";
 import Messagebox from "./components/Messagebox.jsx";
 import Message from "./components/Message.jsx";
-
+import DoctorRatings from './components/DoctorProfile.jsx'
 
 // Styles
 import "./index.css";
@@ -62,6 +62,7 @@ const App = () => {
             <Route path="/messages" element={<Doco />} />
             <Route path='/messagebox' element={<Messagebox />} />
 <Route path='/messagebox/message/:messageId' element={<Message />} />
+<Route path="/doctor/:id/ratings" element={<DoctorRatings />} />
 
             {/* Redirect unknown routes to SignIn */}
             <Route path="*" element={<Navigate to="/SignIn" />} />

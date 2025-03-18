@@ -10,8 +10,8 @@ const MainPage = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [restartKey, setRestartKey] = useState(0);
-  const fullText = "Connecting Rural Himachal to E-Health Services";
-  const images = [ auntylogs,bche,chacha];
+  const fullText = "Welcome to Him Aarogya !!";
+  const images = [auntylogs, bche, chacha];
 
   // Image Slider Effect
   useEffect(() => {
@@ -27,18 +27,18 @@ const MainPage = () => {
   // Typing Effect That Repeats Every 4 Seconds
   useEffect(() => {
     let i = 0;
-    setDisplayText(""); // Clear text before retyping
+    setDisplayText("");
     const typingInterval = setInterval(() => {
       setDisplayText(fullText.substring(0, i + 1));
       i++;
       if (i > fullText.length) {
         clearInterval(typingInterval);
-        setTimeout(() => setRestartKey((prevKey) => prevKey + 1), 4000); // Force restart
+        setTimeout(() => setRestartKey((prevKey) => prevKey + 1), 4000);
       }
     }, 100);
 
     return () => clearInterval(typingInterval);
-  }, [restartKey]); // Depend on restartKey to force re-run
+  }, [restartKey]);
 
   return (
     <div className="dashboard-container">
@@ -53,8 +53,12 @@ const MainPage = () => {
         <h2 className="text-overlay typing-text">{displayText}</h2>
       </div>
 
-      
-       
+      <div className="toll-free-banner">
+        📞 Toll-Free:{" "}
+        <a href="tel:18001234567" className="flash">
+          1800-123-4567
+        </a>
+      </div>
     </div>
   );
 };

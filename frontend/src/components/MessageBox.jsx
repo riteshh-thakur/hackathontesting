@@ -57,12 +57,16 @@ function Messagebox() {
                 ))}
               </ul>
 
-              <button
-                onClick={() => navigate(`/messagebox/message/${_id}`, { state: { name: usertwo.name ,id:_id} })}
-                className="mt-3 px-4 py-2 border border-green-600 text-green-600 rounded-md hover:bg-green-600 hover:text-white transition"
-              >
-                Chat with Doctor
-              </button>
+              <div className="mt-3 space-x-2">
+                <button
+                  onClick={() => navigate(`/messagebox/message/${_id}`, { state: { name: usertwo.name, id: _id } })}
+                  className="px-4 py-2 border border-green-600 text-green-600 rounded-md hover:bg-green-600 hover:text-white transition"
+                >
+                  Chat with Doctor
+                </button>
+
+               
+              </div>
             </div>
           ))}
         </div>

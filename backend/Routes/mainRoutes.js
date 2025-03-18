@@ -5,8 +5,9 @@ import {
   addDoctor,
   updateDoctor,
   deleteDoctor,
-  login,addschedule,deleteDoctorSchedule
+  login,addschedule,deleteDoctorSchedule,giverating,getrating
 } from "../controller/doctorController.js";
+import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
@@ -27,7 +28,10 @@ router.put("/:id", updateDoctor);
 router.delete("/doctors/:id", deleteDoctor);
 router.post('/doc/login',login)
 router.post('/addschedule',addschedule);
-router.post('/deletesched',deleteDoctorSchedule)
+router.post('/deletesched',deleteDoctorSchedule);
+router.post('/rate/:name', authMiddleware, giverating);
+
+router.get('/:id',getrating);
 export default router;
 
 

@@ -29,7 +29,15 @@ const doctorSchema = new mongoose.Schema(
           day: { type: String, required: true },
           time: { type: String, required: true }
       }
-  ]
+  ],
+  ratings: [
+    {
+      userId: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
+      rating: { type: Number, required: true, min: 1, max: 5 },
+      comment: { type: String }
+    }
+  ],
+  averageRating: { type: Number, default: 0 }
   },
   { timestamps: true }
 );

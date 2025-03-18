@@ -203,7 +203,40 @@ export const deleteDoctor = async (req, res) => {
 
 // module.exports = { deleteDoctor };
 
+export const giverating=async(req,res)=>{
+  const { rating, comment } = req.body;
+  const doctorName = req.params.name;
+  const { id: userId } = req.user;
+  try {
+    console.log("sah",doctorName);
+    
+    const doctor = await Doctor.findOne({name:doctorName});
+    if (!doctor) return res.status(404).json({ error: 'Doctor not found' });
+console.log("sa",doctor);
 
+    doctor.ratings.push({ userId: userId, rating, comment });
 
+    // Calculate average rating
+    const totalRatings = doctor.ratings.length;
+    const averageRating = doctor.ratings.reduce((sum, r) => sum + r.rating, 0) / totalRatings;
+    doctor.averageRating = averageRating.toFixed(1);
+
+    await doctor.save();
+    res.json({ message: 'Rating added successfully', doctor });
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+export const getrating=async(req,res)=>{
+  try {
+    const doctor = await Doctor.findById(req.params.id).populate('ratings.userId', 'name');
+    if (!doctor) return res.status(404).json({ error: 'Doctor not found' });
+
+    res.json(doctor);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+
+}
 
 
