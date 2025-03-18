@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';  // Use NavLink for active link styling
 import { FaTachometerAlt, FaUser, FaClipboardList, FaComments, FaUserMd, FaHistory, FaSignOutAlt } from "react-icons/fa";
+import { FcTodoList } from "react-icons/fc";
+import { SiTodoist } from "react-icons/si";
 import './styles.css';
 
 const Sidebar = () => {
@@ -37,6 +39,11 @@ const Sidebar = () => {
         <li>
           <NavLink to="/history" className="sidebar-link" activeClassName="active-link">
             <FaHistory className="icon" /> History
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/appointmentuser" className="sidebar-link" activeClassName="active-link">
+          <SiTodoist className='icon' />Appointment scheduled
           </NavLink>
         </li>
         <li>

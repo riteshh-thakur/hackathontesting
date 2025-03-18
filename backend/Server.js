@@ -12,7 +12,7 @@ import airouter from './Routes/ai.routes.js';
 import chatrouter from "./Routes/chat.routes.js";
 import chat from "./Models/Chat.model.js";
 import messagerouter from "./Routes/message.routes.js";
- 
+ import appointmentrouter from "./Routes/appointment.route.js";
 import jwt from "jsonwebtoken";
 dotenv.config();
 
@@ -90,6 +90,7 @@ app.use("/api/auth", authRoutes);
 app.use('/chat', chatrouter);
 app.use('/ai', airouter);
 app.use('/message',messagerouter);
+app.use('/appointment',appointmentrouter);
 const router = express.Router();
 
 router.get("/profile", authMiddleware, async (req, res) => {

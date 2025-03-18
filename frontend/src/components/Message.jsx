@@ -8,13 +8,13 @@ function Message() {
   const location = useLocation();
   const navigate = useNavigate();
   const [doctorName, setDoctorName] = useState(location.state?.name || "Dr. John Doe");
+  const [chatId, setChatId] = useState(location.state?.id || "");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [showRatingButton, setShowRatingButton] = useState(false);
   const [showRatingForm, setShowRatingForm] = useState(false);
 
   useEffect(() => {
-    console.log("Doctor Name:", doctorName);
+    console.log("Chat ID:", chatId);
 
     if (doctorName) {
       setMessages([]);
@@ -22,18 +22,23 @@ function Message() {
   }, [doctorName]);
 
   useEffect(() => {
-    const socket = initializeSocket(doctorName);
+    if (!chatId) return;
+
+    const socket = initializeSocket(chatId);
+    socket.emit("join-room", chatId); // Join the chat room
 
     recievemessage("project-message", (data) => {
+      console.log("Received message:", data);  // Verify incoming data
       setMessages((prevMessages) => [...prevMessages, data.message]);
     });
 
     return () => socket.disconnect();
-  }, [doctorName]);
+  }, [chatId]);
 
   const handleSendMessage = () => {
     if (message.trim() !== "") {
       const newMessage = {
+        chatId,
         sender: "Patient",
         name: "Patient",
         text: message,
@@ -42,77 +47,70 @@ function Message() {
       setMessages([...messages, newMessage]);
       sendmessage("project-message", newMessage);
       setMessage("");
-      setShowRatingButton(true); // Show 'Give Rating' button after message is sent
+      setShowRatingForm(true); // Show rating form after sending a message
     }
   };
 
-  const renderMessageText = (text) => {
-    const urlPattern = /(http:\/\/localhost:5173\/docdashboard\/room\/\w+)/g;
-    return text.replace(urlPattern, (url) => `<a href="${url}" target="_blank" class="text-blue-500 underline">${url}</a>`);
-  };
-
   return (
-    <div className="flex justify-end bg-green-100 min-h-screen p-4">
-      <div className="mt-5 max-w-3xl w-full p-6 bg-white rounded-2xl shadow-xl border border-green-300">
-        <button onClick={() => navigate(-1)} className="border px-3 py-1 text-green-600 rounded-md mb-4 hover:bg-green-200">
+    <div className="ml-40 flex justify-center items-center min-h-screen bg-green-50">
+      <div className="mt-5 max-w-3xl w-full p-6 bg-white rounded-2xl shadow-lg border border-green-300">
+        <button
+          onClick={() => navigate(-1)}
+          className="border px-3 py-1 text-green-600 rounded-md mb-4 hover:bg-green-100"
+        >
           ⬅ Back
         </button>
 
-        <div className="border-b pb-4 mb-4 space-y-3">
+        <div className="border-b pb-4 mb-4 max-h-60 overflow-y-auto">
           {messages.map((msg, index) => (
-            <div key={index} className="p-3 bg-gray-100 rounded-lg">
-              <p className="font-semibold text-green-700">{msg.name}</p>
-              <p className="text-gray-700" dangerouslySetInnerHTML={{ __html: renderMessageText(msg.text) }}></p>
-              <p className="text-sm text-gray-500 italic">{msg.time}</p>
+            <div
+              key={index}
+              className={`p-3 rounded-md ${msg.sender === "Patient"
+                ? "bg-green-100 text-right"
+                : "bg-blue-100 text-left"}`
+              }
+            >
+              <p className="font-semibold">{msg.name}</p>
+              <p className="text-gray-700">{msg.text}</p>
+              <p className="text-sm text-gray-500">{msg.time}</p>
             </div>
           ))}
         </div>
 
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-bold text-green-700">{doctorName}</h2>
+          <h2 className="text-lg font-bold">{doctorName}</h2>
         </div>
 
         <div>
-          <label className="block font-semibold text-green-700 mb-1">Message Input Area</label>
+          <label className="block font-semibold mb-1">Message Input Area</label>
           <div className="flex items-center gap-2">
             <input
               type="text"
               placeholder="Type a message..."
-              className="border border-green-400 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="border rounded-md px-3 py-2 w-full"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
             />
             <button
               onClick={handleSendMessage}
-              className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition"
+              className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center"
             >
               <MdSend />
             </button>
           </div>
         </div>
 
-        {showRatingButton && !showRatingForm && (
-          <div className="mt-5 text-center">
-            <button
-              onClick={() => setShowRatingForm(true)}
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-            >
-              Give Rating
-            </button>
-          </div>
-        )}
-
         {showRatingForm && (
-          <div className="mt-5">
+          <div className="mt-4">
             <RatingComponent doctorName={doctorName} />
           </div>
         )}
 
-        <div className="mt-4 text-right space-x-3">
-          <button className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
-            Add Attachment
+        <div className="mt-4 text-right">
+          <button className="bg-green-100 text-green-700 px-4 py-2 rounded-md">
+            Request Prescription
           </button>
-          <button className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
+          <button className="ml-5 bg-green-100 text-green-700 px-4 py-2 rounded-md">
             Request Test
           </button>
         </div>
