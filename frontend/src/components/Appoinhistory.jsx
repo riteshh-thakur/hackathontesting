@@ -36,17 +36,33 @@ function PatientAppointments() {
 
       <div>
         {appointments.length > 0 ? (
-          appointments.map(({ _id, doctorId, timeSlot, date }) => (
-            <div 
-              key={_id} 
-              className="border p-3 mb-2 rounded-md shadow-md w-3/4 ml-auto"
+          appointments.map(({ _id, doctorId, timeSlot, date, status }) => (
+            <div
+              key={_id}
+              className={`border p-3 mb-2 rounded-md shadow-md w-3/4 ml-auto 
+                ${status === 'cancelled' ? 'bg-red-100 border-red-400' : ''}`}
             >
-              <p className="font-medium">
-                Your appointment with <span className="font-bold">{doctorId.name} </span> 
-                  is at <span className="text-blue-500">{timeSlot}</span> on{' '}
-                <span className="text-purple-500">{formatDate(date)}</span>.
-              </p>
-              <p className="text-green-600">Message doctor at that time.</p>
+              {status === 'cancelled' ? (
+                <>
+                  <p className="font-medium text-red-500">
+                    ❌ Your appointment with <span className="font-bold">{doctorId.name} </span>  
+                    scheduled at <span className="text-blue-500">{timeSlot}</span> on{' '}
+                    <span className="text-purple-500">{formatDate(date)}</span> was <b>cancelled</b> by the doctor.
+                  </p>
+                  <p className="text-gray-600">
+                    ⚠️ Please reschedule your appointment at a different available slot.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className="font-medium">
+                    Your appointment with <span className="font-bold">{doctorId.name}</span>  
+                    is at <span className="text-blue-500">{timeSlot}</span> on{' '}
+                    <span className="text-purple-500">{formatDate(date)}</span>.
+                  </p>
+                  <p className="text-green-600">Message doctor at that time.</p>
+                </>
+              )}
             </div>
           ))
         ) : (
