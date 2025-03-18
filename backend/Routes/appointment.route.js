@@ -7,5 +7,6 @@ appointmentrouter.get('/appointment',authMiddleware,appointment.getAppointmentBy
 appointmentrouter.get('/allapp',appointment.getAllAppointments);
 appointmentrouter.get('/slots',appointment.getSlots);
 appointmentrouter.get('/getdocapp',authMiddleware,appointment.getdoctorappointments)
-appointmentrouter.get('/patapp',authMiddleware,appointment.getpatientappointments)
+appointmentrouter.get('/patapp',authMiddleware,appointment.getpatientappointments);
+appointmentrouter.get('/update',appointment.updateAppointmentStatus)
 export default appointmentrouter;

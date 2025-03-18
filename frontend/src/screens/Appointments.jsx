@@ -40,12 +40,18 @@ const Appointments = () => {
   );
 
   // Cancel Appointment Handler
-  const handleCancel = (id) => {
-    setAppointments(prev =>
-      prev.map(appt =>
-        appt.id === id ? { ...appt, status: "Cancelled" } : appt
-      )
-    );
+  const handleCancel = async (id) => {
+    try {
+      await apiClient.get(`/appointment/update?status=cancelled&id=${id}`);
+      setAppointments(prev =>
+        prev.map(appt =>
+          appt.id === id ? { ...appt, status: "Cancelled" } : appt
+        )
+      );
+    } catch (error) {
+      console.error("Error cancelling appointment:", error);
+      alert("Failed to cancel the appointment. Please try again.");
+    }
   };
 
   return (

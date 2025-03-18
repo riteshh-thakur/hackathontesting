@@ -57,8 +57,8 @@ export const getAppointmentById = async (req, res) => {
 
 // ➤ Update Appointment Status
 export const updateAppointmentStatus = async (req, res) => {
-    const { id } = req.params;
-    const { status } = req.body;
+    const { id } = req.query;
+    const { status } = req.query;
 
     if (!['pending', 'confirmed', 'completed', 'cancelled'].includes(status)) {
         return res.status(400).json({ error: "Invalid status" });
