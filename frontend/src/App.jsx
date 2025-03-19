@@ -16,6 +16,7 @@ import DoctorDashboards from "./layout/doctordashboard";
 import Messagebox from "./components/Messagebox.jsx";
 import Message from "./components/Message.jsx";
 import DoctorRatings from './components/DoctorProfile.jsx'
+import History from "./components/History.jsx";
 
 // Styles
 import "./index.css";
@@ -61,6 +62,7 @@ const App = () => {
             <Route path="/appointment/:id" element={<Appointment />} />
             <Route path="/messages" element={<Doco />} />
             <Route path='/messagebox' element={<Messagebox />} />
+            <Route path='/history' element={<History />} />
 <Route path='/messagebox/message/:messageId' element={<Message />} />
 <Route path="/doctor/:id/ratings" element={<DoctorRatings />} />
 

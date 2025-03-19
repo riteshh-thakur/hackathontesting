@@ -1,7 +1,11 @@
-import { async } from 'regenerator-runtime';
-import Chat from '../Models/Chat.model.js';
-import Doctor from '../models/doctorModel.js';
-import UserModel from '../Models/user.js';
+
+
+
+
+import Chat from "../Models/Chat.model.js";
+import Doctor from "../models/doctorModel.js";
+import UserModel from "../Models/user.js";
+
 
 // Create a new chat
 export const createChat = async (req, res) => {
@@ -48,7 +52,7 @@ export const createChat = async (req, res) => {
 };
 
 // Fetch all chats for a user
-export const allchats= async (req, res) => {
+export const allchats = async (req, res) => {
     try {
         const { id: userId } = req.user;
 
@@ -60,9 +64,9 @@ export const allchats= async (req, res) => {
         // Fetch chats involving the user
         const chats = await Chat.find({
             $or: [{ userone: userId }, { usertwo: userId }]
-        }).populate('usertwo');   
- 
-        return res.status(200).json({ chats ,success: true,});
+        }).populate("usertwo");   
+
+        return res.status(200).json({ chats, success: true });
     } catch (error) {
         console.error("Fetch Chats Error:", error);
         return res.status(500).json({
@@ -72,18 +76,27 @@ export const allchats= async (req, res) => {
         });
     }
 };
-export const alldoctorchat=async(req,res)=>{
+
+
+
+
+
+
+// Fetch all chats for a doctor
+export const alldoctorchat = async (req, res) => {
     try {
-        const {_id:doctorid}=req.user;
-        const doctorexist=await Doctor.findById(doctorid);
-        if(!doctorexist){
-            return res.status(404).json({ message: "User not founds", success: false });
+        const { _id: doctorId } = req.user;
+        const doctorExists = await Doctor.findById(doctorId);
+
+        if (!doctorExists) {
+            return res.status(404).json({ message: "Doctor not found", success: false });
         }
+
         const chats = await Chat.find({
-            $or: [{ userone: doctorid }, { usertwo: doctorid }]
-        }).populate('userone');   
- 
-        return res.status(200).json({ chats ,success: true,});
+            $or: [{ userone: doctorId }, { usertwo: doctorId }]
+        }).populate("userone");   
+
+        return res.status(200).json({ chats, success: true });
     } catch (error) {
         console.error("Fetch Chats Error:", error);
         return res.status(500).json({
@@ -92,4 +105,4 @@ export const alldoctorchat=async(req,res)=>{
             success: false
         });
     }
-}
+};

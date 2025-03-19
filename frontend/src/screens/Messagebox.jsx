@@ -48,15 +48,26 @@ function Messagebox() {
                             <p className="text-sm text-gray-500">Joined at: {new Date(createdAt).toLocaleDateString()}</p>
 
                             <button
-                                onClick={() => {
-                                    setPatientName(userone?.name);
-                                    navigate(`/docdashboard/message/${_id}`, { state: { name: userone?.name,chatId:_id } });
-                                    setChat(true);
-                                }}
-                                className="mt-3 px-4 py-2 border border-green-600 text-green-600 rounded-md hover:bg-green-600 hover:text-white transition"
-                            >
-                                View Chat
-                            </button>
+    onClick={() => {
+        setPatientName(userone?.name);
+        navigate(`/docdashboard/message/${_id}`, { state: { name: userone?.name, chatId: _id } });
+        setChat(true);
+    }}
+    className="mt-3 px-4 py-2 border border-green-600 text-green-600 rounded-md hover:bg-green-600 hover:text-white transition mr-2"
+>
+    View Chat
+</button>
+<button
+    onClick={() => {
+        setPatientName(userone?.name);
+        navigate(`/docdashboard/message/${_id}`, { state: { name: userone?.name, chatId: _id } });
+        setChat(true);
+    }}
+    className="mt-3 px-4 py-2 border border-green-600 text-green-600 rounded-md hover:bg-green-600 hover:text-white transition"
+>
+    View Prescription
+</button>
+
                         </div>
                     ))}
                 </div>

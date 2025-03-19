@@ -54,9 +54,9 @@ const Navbar = () => {
       <div className="logo">
         <img src={logo} alt="logo" className="topi-logo" />
       </div>
-      <div className="search-bar">
+      {/* <div className="search-bar">
         <input type="text" placeholder="Search..." />
-      </div>
+      </div> */}
       <div className="user-section">
         <NavLink to="/profile" className="user-link">
           <FaUser className="user-icon" />
@@ -66,7 +66,7 @@ const Navbar = () => {
 
       {/* ✅ Translate Button */}
       <button className="translate-btn" onClick={handleTranslate}>
-        {language === 'en' ? 'Switch to Hindi' : 'Switch to English'}
+        {language === 'en' ? 'हिंदी के लिए' : 'Switch to English'}
       </button>
 
       {/* ✅ Hidden Google Translate Element */}
