@@ -1,5 +1,5 @@
  
-import Doctor from "../models/doctorModel.js";
+import Doctor from "../Models/doctorModel.js";
 import user from '../Models/user.js'
 import mongoose from "mongoose";
   
