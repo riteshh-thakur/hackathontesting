@@ -34,7 +34,7 @@ const SignIn = () => {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:8080/api/auth/signup", {
+      const response = await fetch("https://hackathontesting-56gs.onrender.com/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...formData, role: userRole }),
@@ -57,8 +57,8 @@ const SignIn = () => {
     try {
       const endpoint =
         userRole === "doctor"
-          ? "http://localhost:8080/api/doc/login"
-          : "http://localhost:8080/api/auth/signin";
+          ? "https://hackathontesting-56gs.onrender.com/api/doc/login"
+          : "https://hackathontesting-56gs.onrender.com/api/auth/signin";
 
       const bodyData =
         userRole === "doctor"
