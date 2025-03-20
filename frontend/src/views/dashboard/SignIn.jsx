@@ -117,11 +117,11 @@ const SignIn = () => {
             <h1>
               Get care from the <br /> people who care.
             </h1>
-            <p>
+{/*             <p>
               Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut
               fugit, sed quia consequuntur magni dolores eos qui ratione
               voluptatem sequi nesciunt.
-            </p>
+            </p> */}
             <button className="signin-appointment-btn">
               Get an Appointment
             </button>
