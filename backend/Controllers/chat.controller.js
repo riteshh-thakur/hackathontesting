@@ -3,7 +3,7 @@
 
 
 import Chat from "../Models/Chat.model.js";
-import Doctor from "../models/doctorModel.js";
+import Doctor from "../Models/doctorModel.js";
 import UserModel from "../Models/user.js";
 
 
