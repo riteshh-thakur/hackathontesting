@@ -13,7 +13,7 @@ import Doco from "./components/Doco";
 import SignIn from "./views/dashboard/SignIn";
 import DoctorDashboard from "./layout/dashboardLayout";
 import DoctorDashboards from "./layout/doctordashboard";
-import Messagebox from "./components/Messagebox.jsx";
+import Messagebox from "./components/MessageBox.jsx";
 import Message from "./components/Message.jsx";
 import DoctorRatings from './components/DoctorProfile.jsx'
 import History from "./components/History.jsx";
