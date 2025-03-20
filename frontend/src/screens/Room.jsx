@@ -15,7 +15,7 @@ function Room() {
         sharedLinks: [
             {
               name: 'Copy Link',
-              url: `${import.meta.env.VITE_BASE_URL}/docdashboard/room/${roomId}`,
+              url: `${import.meta.env.VITE_API_URL}/docdashboard/room/${roomId}`,
             },
           ],          
         scenario: {
