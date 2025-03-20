@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+ import React, { useState, useEffect } from 'react';
 import { apiClient } from '../../axios/axios.js';
 
 const Appointments = () => {
@@ -11,8 +11,11 @@ const Appointments = () => {
     const fetchAppointments = async () => {
       try {
         const response = await apiClient.get("/appointment/getdocapp");
+console.log("ss",response);
 
-        const today = new Date(); // Today's date for filtering
+const today = new Date();
+today.setHours(0, 0, 0, 0); 
+
 
         const formattedAppointments = response.data
           .map(appt => ({
