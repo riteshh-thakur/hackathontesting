@@ -1,5 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import Doctor from "../models/doctorModel.js";
+import Doctor from "../Models/doctorModel.js";
 
 const key = "AIzaSyAowgJOXblYyZidVx1YDeAYLdwvyuiqz8Q";
 const genAI = new GoogleGenerativeAI(key);
