@@ -39,7 +39,7 @@ function Doco() {
             let appointmentLink = "";
             if (data.doctor?.id) {
                 const doctorId = data.doctor.id;
-                appointmentLink = `http://localhost:5173/appointment/${doctorId}`;
+                appointmentLink = `https://hackathontesting-1-l1av.onrender.com/appointment/${doctorId}`;
             }
 
             setMessages((prev) => [
