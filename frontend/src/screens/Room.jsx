@@ -15,7 +15,7 @@ function Room() {
         sharedLinks: [
             {
               name: 'Copy Link',
-              url: `${import.meta.env.VITE_API_URL}/docdashboard/room/${roomId}`,
+              url: `https://hackathontesting-1-l1av.onrender.com/docdashboard/room/${roomId}`,
             },
           ],          
         scenario: {
