@@ -1,34 +1,36 @@
-
-
-
-
-
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { apiClient } from "../../axios/axios.js";
 
 function Messagebox() {
     const navigate = useNavigate();
     const [search, setSearch] = useState("");
-    const [doctors, setDoctors] = useState([]);
 
-    // Fetch patients data
-    useEffect(() => {
-        const fetchDoctors = async () => {
-            try {
-                const response = await apiClient.get('/chat/allchat');
-                console.log("API Response:", response.data);
-                setDoctors(Array.isArray(response.data.chats) ? response.data.chats : []);
-            } catch (error) {
-                console.error("Error fetching the History:", error);
-            }
-        };
-        fetchDoctors();
-    }, []);
+    // Predefined doctor names
+    const doctorNames = ["Dr. Shubham", "Dr. Patel", "Dr. Ritesh", "Dr. Aryan"];
 
-    // Filter patients based on search input
+    // Predefined specializations
+    const specializations = [
+        "Physician", "Cardiology", "Physician", "Cardiology"
+    ];
+
+    // Function to generate a random past joined date
+    const generateRandomDate = () => {
+        const pastDate = new Date();
+        pastDate.setFullYear(pastDate.getFullYear() - Math.floor(Math.random() * 5));
+        return pastDate.toLocaleDateString();
+    };
+
+    // Creating doctor objects with names, specializations, and joined dates
+    const doctors = doctorNames.map((name, index) => ({
+        _id: `doctor-${index + 1}`,
+        name,
+        specialization: specializations[Math.floor(Math.random() * specializations.length)],
+        joinedAt: generateRandomDate(),
+    }));
+
+    // Filter doctors based on search input
     const filteredDoctors = doctors.filter((doctor) =>
-        doctor.usertwo?.name?.toLowerCase().includes(search.toLowerCase())
+        doctor.name.toLowerCase().includes(search.toLowerCase())
     );
 
     return (
@@ -43,15 +45,14 @@ function Messagebox() {
                 />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {filteredDoctors.map(({ _id, usertwo}) => (
+                    {filteredDoctors.map(({ _id, name, specialization, joinedAt }) => (
                         <div key={_id} className="border p-4 rounded-lg shadow-sm bg-gray-50">
-                            <h2 className="font-semibold text-lg">{usertwo?.name}</h2>
-                            {/* <p className="text-sm text-gray-500">Specialization: {new Date(createdAt).toLocaleDateString()}</p> */}
-                            <p className="text-sm text-gray-500">Joined at: {new Date(createdAt).toLocaleDateString()}</p> 
+                            <h2 className="font-semibold text-lg">{name}</h2>
+                            <p className="text-sm text-gray-500">Specialization: {specialization}</p>
+                            {/* <p className="text-sm text-gray-500">Joined at: {joinedAt}</p> */}
 
-                           
                             <div className="flex flex-col gap-2 mt-3">
-                            <button className="w-full px-4 py-2 text-center border border-green-600 text-green-600 rounded-md hover:bg-green-600 hover:text-white transition"> 
+                                <button className="w-full px-4 py-2 text-center border border-green-600 text-green-600 rounded-md hover:bg-green-600 hover:text-white transition">
                                     View Prescription
                                 </button>
                                 <button className="w-full px-4 py-2 text-center border border-blue-600 text-blue-600 rounded-md hover:bg-blue-600 hover:text-white transition">
@@ -67,6 +68,7 @@ function Messagebox() {
 }
 
 export default Messagebox;
+
 
 
 
