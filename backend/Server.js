@@ -219,7 +219,7 @@ import fs from "fs";
 
 import path from "path";
 import { fileURLToPath } from "url";
-import doctorRoutes from "./routes/mainRoutes.js";
+import doctorRoutes from "./Routes/mainRoutes.js";
 import authRoutes from "./Routes/authRoutes.js";
 import authMiddleware from "./middleware/authMiddleware.js";
 import connectDB from "./Models/db.js";
