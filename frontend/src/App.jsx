@@ -18,6 +18,7 @@ import Message from "./components/Message.jsx";
 import DoctorRatings from './components/DoctorProfile.jsx'
 import History from "./components/History.jsx";
 
+import Appoinhistory from './components/Appoinhistory.jsx'
 // Styles
 import "./index.css";
 import "./components/styles.css";
@@ -65,8 +66,8 @@ const App = () => {
             <Route path='/history' element={<History />} />
 <Route path='/messagebox/message/:messageId' element={<Message />} />
 <Route path="/doctor/:id/ratings" element={<DoctorRatings />} />
-
-            {/* Redirect unknown routes to SignIn */}
+<Route path="/appointmentuser" element={<Appoinhistory/>}/>
+ 
             <Route path="*" element={<Navigate to="/SignIn" />} />
           </Routes>
         </div>

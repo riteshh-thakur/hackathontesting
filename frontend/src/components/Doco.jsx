@@ -5,7 +5,6 @@ import { apiClient } from "../../axios/axios.js";
 import 'regenerator-runtime/runtime';
 import "./doco.css";
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
- 
 
 function Doco() {
     const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
@@ -36,24 +35,37 @@ function Doco() {
 
             const data = response.data;
             console.log("Response Data:", data);
-            let chatlink=""
-            {{
-                if(data.doctor?.name){
-                 const chat=  await apiClient.post(`/chat/chat?doctor=${data.doctor.name}`)
-                console.log("s",chat);
-                
-                 chatlink=chat.data.chatId;
-                }
-            }}
-           
 
-        setMessages((prev) => [
-            ...prev,
-            { text: data.message, sender: "bot" },
-            
-            {text: `now you can chat with doctor from messagebox now`}
-        ]);
-            
+            let appointmentLink = "";
+            if (data.doctor?.id) {
+                const doctorId = data.doctor.id;
+                appointmentLink = `http://localhost:5173/appointment/${doctorId}`;
+            }
+
+            setMessages((prev) => [
+                ...prev,
+                { text: data.message, sender: "bot" },
+                {
+                    text: (
+                        <div className="appointment-card">
+                            <p className="font-bold text-blue-500">✅ Appointment Booking Available!</p>
+                            <p>
+                                Book your appointment here:{" "}
+                            <h2>   <a
+                                    href={appointmentLink}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="appointment-link"
+                                >
+                                    {appointmentLink}
+                                </a></h2> 
+                            </p>
+                        </div>
+                    ),
+                    sender: "bot"
+                }
+            ]);
+
         } catch (error) {
             console.error("Error fetching data:", error);
             setMessages((prev) => [...prev, { text: "Error fetching data", sender: "bot" }]);

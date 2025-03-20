@@ -1,8 +1,4 @@
 
-
-
-
-
 // import React, { useState, useEffect } from 'react';
 // import { useNavigate, useLocation } from "react-router-dom";
 // import { MdSend } from "react-icons/md";
@@ -14,9 +10,12 @@
 //   const navigate = useNavigate();
 //   const [doctorName, setDoctorName] = useState(location.state?.name || "Dr. John Doe");
 //   const [chatId, setChatId] = useState(location.state?.id || "");
+
 //   const [message, setMessage] = useState("");
 //   const [messages, setMessages] = useState([]);
 //   const [selectedFile, setSelectedFile] = useState(null);
+//   const [message, setMessage] = useState("");
+//   const [messages, setMessages] = useState([]);
 //   const [showRatingForm, setShowRatingForm] = useState(false);
 //   const [fullScreenImage, setFullScreenImage] = useState(null);
 
@@ -26,7 +25,6 @@
 //     const socket = initializeSocket(chatId);
 //     socket.emit("join-room", chatId);
 
-//     // Receiving text messages (Avoid Duplicates)
 //     recievemessage("project-message", (data) => {
 //       setMessages((prevMessages) => {
 //         if (!prevMessages.some(msg => msg.time === data.time && msg.sender === data.sender)) {
@@ -36,7 +34,6 @@
 //       });
 //     });
 
-//     // Receiving images (Avoid Duplicates)
 //     recievemessage("receive-image", (data) => {
 //       console.log("Received image:", data.image);
 //       setMessages((prevMessages) => {
@@ -45,6 +42,22 @@
 //         }
 //         return prevMessages;
 //       });
+//     console.log("Chat ID:", chatId);
+
+//     if (doctorName) {
+//       setMessages([]);
+//     }
+//   }, [doctorName]);
+
+//   useEffect(() => {
+//     if (!chatId) return;
+
+//     const socket = initializeSocket(chatId);
+//     socket.emit("join-room", chatId); // Join the chat room
+
+//     recievemessage("project-message", (data) => {
+//       console.log("Received message:", data);  // Verify incoming data
+//       setMessages((prevMessages) => [...prevMessages, data.message]);
 //     });
 
 //     return () => socket.disconnect();
@@ -86,6 +99,10 @@
 //     }
 //   };
 
+//       setShowRatingForm(true); // Show rating form after sending a message
+//     }
+//   };
+
 //   return (
 //     <div className="ml-40 flex justify-center items-center min-h-screen bg-green-50">
 //       <div className="mt-5 max-w-3xl w-full p-6 bg-white rounded-2xl shadow-lg border border-green-300">
@@ -109,6 +126,15 @@
 //                   onClick={() => setFullScreenImage(msg.content)}
 //                 />
 //               )}
+//             <div
+//               key={index}
+//               className={`p-3 rounded-md ${msg.sender === "Patient"
+//                 ? "bg-green-100 text-right"
+//                 : "bg-blue-100 text-left"}`
+//               }
+//             >
+//               <p className="font-semibold">{msg.name}</p>
+//               <p className="text-gray-700">{msg.text}</p>
 //               <p className="text-sm text-gray-500">{msg.time}</p>
 //             </div>
 //           ))}
@@ -129,12 +155,16 @@
 //               onChange={(e) => setMessage(e.target.value)}
 //             />
 //             <button onClick={handleSendMessage} className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center">
+//             <button
+//               onClick={handleSendMessage}
+//               className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center"
+//             >
 //               <MdSend />
 //             </button>
 //           </div>
 //         </div>
 
-//         <div className="mt-4 text-right">
+//         <div className="mt-4 flex justify-between items-center">
 //           <input type="file" onChange={handleFileChange} className="hidden" id="fileInput" />
 //           <button 
 //             className="bg-green-100 text-green-700 px-4 py-2 rounded-md"
@@ -142,18 +172,21 @@
 //           >
 //             Add Attachment
 //           </button>
-//           {selectedFile && (
-//             <button className="bg-blue-500 text-white px-4 py-2 ml-2 rounded-md" onClick={handleSendMessage}>
-//               Send Image
-//             </button>
-//           )}
-//         </div>
-
+//           {showRatingForm && <RatingComponent doctorName={doctorName} />}
 //         {showRatingForm && (
 //           <div className="mt-4">
 //             <RatingComponent doctorName={doctorName} />
 //           </div>
 //         )}
+
+//         <div className="mt-4 text-right">
+//           <button className="bg-green-100 text-green-700 px-4 py-2 rounded-md">
+//             Request Prescription
+//           </button>
+//           <button className="ml-5 bg-green-100 text-green-700 px-4 py-2 rounded-md">
+//             Request Test
+//           </button>
+//         </div>
 //       </div>
 
 //       {fullScreenImage && (
@@ -182,7 +215,6 @@ function Message() {
   const navigate = useNavigate();
   const [doctorName, setDoctorName] = useState(location.state?.name || "Dr. John Doe");
   const [chatId, setChatId] = useState(location.state?.id || "");
-
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -196,22 +228,11 @@ function Message() {
     socket.emit("join-room", chatId);
 
     recievemessage("project-message", (data) => {
-      setMessages((prevMessages) => {
-        if (!prevMessages.some(msg => msg.time === data.time && msg.sender === data.sender)) {
-          return [...prevMessages, data];
-        }
-        return prevMessages;
-      });
+      setMessages((prevMessages) => [...prevMessages, data]);
     });
 
     recievemessage("receive-image", (data) => {
-      console.log("Received image:", data.image);
-      setMessages((prevMessages) => {
-        if (!prevMessages.some(msg => msg.content === `data:image/png;base64,${data.image}`)) {
-          return [...prevMessages, { sender: data.sender || "Doctor", type: "image", content: `data:image/png;base64,${data.image}`, time: new Date().toLocaleTimeString() }];
-        }
-        return prevMessages;
-      });
+      setMessages((prevMessages) => [...prevMessages, { sender: data.sender || "Doctor", type: "image", content: `data:image/png;base64,${data.image}`, time: new Date().toLocaleTimeString() }]);
     });
 
     return () => socket.disconnect();
@@ -256,10 +277,7 @@ function Message() {
   return (
     <div className="ml-40 flex justify-center items-center min-h-screen bg-green-50">
       <div className="mt-5 max-w-3xl w-full p-6 bg-white rounded-2xl shadow-lg border border-green-300">
-        <button
-          onClick={() => navigate(-1)}
-          className="border px-3 py-1 text-green-600 rounded-md mb-4 hover:bg-green-100"
-        >
+        <button onClick={() => navigate(-1)} className="border px-3 py-1 text-green-600 rounded-md mb-4 hover:bg-green-100">
           ⬅ Back
         </button>
 
@@ -303,13 +321,15 @@ function Message() {
 
         <div className="mt-4 flex justify-between items-center">
           <input type="file" onChange={handleFileChange} className="hidden" id="fileInput" />
-          <button 
-            className="bg-green-100 text-green-700 px-4 py-2 rounded-md"
-            onClick={() => document.getElementById("fileInput").click()}
-          >
+          <button className="bg-green-100 text-green-700 px-4 py-2 rounded-md" onClick={() => document.getElementById("fileInput").click()}>
             Add Attachment
           </button>
           {showRatingForm && <RatingComponent doctorName={doctorName} />}
+        </div>
+
+        <div className="mt-4 text-right">
+          <button className="bg-green-100 text-green-700 px-4 py-2 rounded-md">Request Prescription</button>
+          <button className="ml-5 bg-green-100 text-green-700 px-4 py-2 rounded-md">Request Test</button>
         </div>
       </div>
 

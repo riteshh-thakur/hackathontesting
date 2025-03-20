@@ -13,7 +13,7 @@ function Home() {
         <div>
           <h1 className="text-2xl font-semibold text-[#616161]">
             Hello,{" "}
-            <span className="text-[#212181]">{user?.username || "Paras"}</span>
+            <span className="text-[#212181]">{user?.username || "Doctor"}</span>
           </h1>
           <p className="text-[#616161]">Have a nice day at work</p>
         </div>

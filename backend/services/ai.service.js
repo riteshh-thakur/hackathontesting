@@ -22,6 +22,7 @@ export const generateResult = async (prompt) => {
     const formattedDoctors = doctors.map((doctor) => {
         const todaysSchedule = doctor.schedule.find(schedule => schedule.day === day);
         return {
+          id:doctor._id,
             name: doctor.name,
             specialty: doctor.specialization,
             experience: doctor.experience,
@@ -49,6 +50,7 @@ export const generateResult = async (prompt) => {
         Response format:
         {
             "doctor": {
+            "id":"doctor._id"
                 "name": "Doctor's Name",
                 "specialty": "Doctor's Specialty",
                 "experience": "Doctor's Experience",
@@ -63,6 +65,7 @@ export const generateResult = async (prompt) => {
         Response:
         {
             "doctor": {
+            "id":"doctor._id"
                 "name": "Dr. Smith",
                 "specialty": "Cardiology",
                 "experience": "10 years",

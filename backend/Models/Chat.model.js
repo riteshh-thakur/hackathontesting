@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
- 
+ import user from './user.js';
+ import Doctor from "../models/doctorModel.js";
 const chatschema= new mongoose.Schema({
  
     userone:{

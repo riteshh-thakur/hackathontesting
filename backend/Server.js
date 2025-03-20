@@ -216,7 +216,7 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import multer from "multer";
 import fs from "fs";
-import jwt from "jsonwebtoken";
+
 import path from "path";
 import { fileURLToPath } from "url";
 import doctorRoutes from "./routes/mainRoutes.js";
@@ -229,6 +229,8 @@ import chat from "./Models/Chat.model.js";
 import messagerouter from "./Routes/message.routes.js";
 import Prescription from "./Models/Prescription.js";
 
+ import appointmentrouter from "./Routes/appointment.route.js";
+import jwt from "jsonwebtoken";
 dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -349,6 +351,27 @@ app.use("/api/auth", authRoutes);
 app.use("/chat", chatrouter);
 app.use("/ai", airouter);
 app.use("/message", messagerouter);
+app.use('/chat', chatrouter);
+app.use('/ai', airouter);
+app.use('/message',messagerouter);
+app.use('/appointment',appointmentrouter);
+const router = express.Router();
+
+router.get("/profile", authMiddleware, async (req, res) => {
+  try {
+      const patient = await Patient.findById(req.user.id);
+      if (!patient) return res.status(404).json({ message: "Patient not found" });
+
+      res.json({
+          name: patient.name,
+          age: patient.age,
+          bloodGroup: patient.bloodGroup,
+      });
+  } catch (error) {
+      console.error("Error fetching patient profile:", error);
+      res.status(500).json({ message: "Internal Server Error", error: error.message });
+  }
+});
 
 // Global Error Handling Middleware
 app.use((err, req, res, next) => {
