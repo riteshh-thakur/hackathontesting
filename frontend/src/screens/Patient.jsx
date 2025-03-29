@@ -11,6 +11,7 @@ function Patient() {
     name: "",
     age: 1,
     bloodGroup: "O+",
+    pwd:"",
     conditions: "Hypertension, Allergies",
     details: ["", "", "", "", ""],
   });
@@ -19,7 +20,13 @@ function Patient() {
     const fetchPatients = async () => {
       try {
         const response = await apiClient.get("/chat/docchats");
-        setPatients(response.data.chats.map(chat => chat.userone));
+        console.log("sa",response);
+        
+        const filteredPatients = response.data.chats
+          .map(chat => chat.userone)
+          .filter(patient => patient); // Filter out null/undefined entries
+
+        setPatients(filteredPatients);
         setLoading(false);
       } catch (err) {
         setError("Failed to fetch patient data.");
@@ -138,15 +145,25 @@ function Patient() {
 }
 
 const PatientCard = ({ patient, setPatientDetail, setUser }) => {
+  const { name, email, age, bloodGroup, conditions } = patient || {};
+
   return (
     <div className="bg-white shadow-lg rounded-lg p-4 border border-gray-200">
-      <h2 className="text-lg font-semibold">{patient.name}</h2>
-      <p className="text-sm text-gray-600">Email: {patient.email}</p>
+      <h2 className="text-lg font-semibold">{name || "Unknown Patient"}</h2>
+      <p className="text-sm text-gray-600">Email: {email || "N/A"}</p>
+      <p className="text-sm text-gray-600">Age: {age || "N/A"}</p>
+      <p className="text-sm text-gray-600">Blood Group: {bloodGroup || "N/A"}</p>
+      <p className="text-sm text-gray-600">Conditions: {conditions || "N/A"}</p>
+
       <button
         onClick={() => {
+
           setUser((prevUser) => ({
             ...prevUser,
-            name: patient.name,
+            name: patient?.name || "",
+            age: patient?.age || "",
+            bloodGroup: patient?.bloodGroup || "",
+            conditions: patient?.conditions || "",
           }));
           setPatientDetail(true);
         }}

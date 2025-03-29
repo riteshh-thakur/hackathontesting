@@ -9,6 +9,8 @@
 
 /* Container and Background */
 .signin-container {
+  
+
   width: 100vw;
   height: auto;
   background: url('../../assets/background.png') no-repeat right center/cover;
@@ -434,12 +436,15 @@
 
 /* Outer Container */
 .outer-box {
-  margin-top: 180px;
+  margin-top: 20vh;
+   
   display: flex;
   align-items: center;
+  
 
   flex-direction: column;
-  height: 100vh;
+  height: 80vh;
+  margin-bottom: 10vh;
 }
 
 .add-space {
@@ -464,7 +469,7 @@
   display: flex;
   padding: 20px 0px;
   justify-content: center;
-  margin-bottom: ;
+   
 
   color: white;
   

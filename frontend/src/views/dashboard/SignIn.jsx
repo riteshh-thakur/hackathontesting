@@ -212,6 +212,17 @@ const SignIn = () => {
                     onChange={handleChange}
                     required
                   />
+                    <div className="flex items-center gap-2">
+            <input
+                type="checkbox"
+                name="pwd"
+                onChange={(e) => setFormData({ ...formData, pwd: e.target.checked })}
+                className="w-4 h-4 accent-blue-500 cursor-pointer"
+            />
+            <label className="text-gray-700 cursor-pointer">
+                PWD (Person with Disability)
+            </label>
+        </div>
                   <button type="submit">Sign Up</button>
                   {error && <p className="error">{error}</p>}
                 </form>

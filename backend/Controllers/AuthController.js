@@ -7,7 +7,7 @@ dotenv.config();
 
 export const signup = async (req, res) => {
     try {
-        const { name, email, password } = req.body;
+        const { name, email, password,age,bloodGroup,pwd } = req.body;
         const user = await UserModel.findOne({ email });
 
         if (user) {
@@ -18,7 +18,7 @@ export const signup = async (req, res) => {
         }
 
         const hashedPassword = await hash(password, 10);
-        const userModel = new UserModel({ name, email, password: hashedPassword });
+        const userModel = new UserModel({ name, email, password: hashedPassword,age:age,pwd:pwd,bloodGroup:bloodGroup });
 
         await userModel.save();
         res.status(201).json({
